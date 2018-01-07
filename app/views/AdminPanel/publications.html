@@ -1,0 +1,98 @@
+#{extends 'admin.html' /} #{set title:'Panel administratora' /}
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="@{AdminPanel.dashboard()}">Panel główny</a>
+      </li>
+      <li class="breadcrumb-item active">Publikacje</li>
+    </ol>
+    <div class="row">
+      <div class="col-12">
+        <h1>Publikacje</h1>
+        <div class="col-lg-12">
+          <table id="publicationsTable" class="display table-striped myTable">
+            <thead>
+              <tr>
+                <th>Lp.</th>
+                <th>Data</th>
+                <th>Temat</th>
+                <th>Pobierz</th>
+              </tr>
+            </thead>
+            <tbody>
+              #{list items:publicationsToSend, as:'arg'}
+              <tr>
+                <td></td>
+                <td>${arg?.getDate()}</td>
+                <td>${arg?.getDescription()}</td>
+                <td>
+                  <a href="@{AdminPanel.download(arg?.getId())}" download>
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+              #{/list}
+
+            </tbody>
+          </table>
+
+        </div>
+        #{ifErrors}
+        <span class="error">Wypełnij poprawnie formularz</span>
+        #{/ifErrors}
+        <div class="col-lg-12">
+          #{form @savePublication(), id:'publications-form', enctype:'multipart/form-data'}
+          <div class="form-inline ">
+            <div class="form-group ">
+              <label for="forField1">Data: </label>
+              <input required id="forField1" type="date" name="data.date" value="${params['data.date']}" class="#{errorClass 'data' /} form-control"
+                placeholder="Data" />
+            </div>
+
+            <div class="form-group">
+              <label for="description1">Opis: </label>
+              <input required id="description1" type="text" name="data.description" value="${params['data.description']}" class="#{errorClass 'data' /} form-control"
+                placeholder="Opis" />
+            </div>
+
+            <div class="form-group">
+              <input class="form-control" type="file" id="photo" name="file" />
+            </div>
+            <input type="submit" name="publications-form" id="publications-form" tabindex="4" class="form-control btn btn-login" value="Zapisz">
+          </div>
+          #{/}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  #{include 'admin-footer.html' /} #{get 'admin-footer' /} #{set 'customScripts'}
+  <script>
+    $(document).ready(function () {
+
+      if ($.fn.dataTable.isDataTable('#publicationsTable')) {
+        t = $('#publicationsTable').DataTable();
+      }
+      else {
+        var t = $('#publicationsTable').DataTable({
+          "columnDefs": [{
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+          }],
+          "order": [[1, 'asc']]
+        });
+      }
+
+
+      t.on('order.dt search.dt', function () {
+        t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+          cell.innerHTML = i + 1;
+        });
+      }).draw();
+    });
+  </script> #{/set}
+
+</div>

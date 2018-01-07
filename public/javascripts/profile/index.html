@@ -1,0 +1,116 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+<!-- Header -->
+<header class="masthead index_masthead">
+        <div class="container">
+            <div class="row">
+  
+            </div>
+          <div class="intro-text">
+            <span class="name"><i class="fa fa-graduation-cap" aria-hidden="true"></i>eProf</span>
+            <hr class="star-light">
+            <span class="skills">Znajdź swojego nauczyciela akademickiego</span>
+          </div>
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Wyszukaj..">
+        </div>
+      </div>
+      </header>
+
+<section class="success" id="about">
+        <div class="container">
+                <div class="row">
+          <div id="myUL">    
+                #{list items:findUsers, as:'arg'}
+                <div class="box col-lg-4">
+                  <a href="@{Application.profile(arg.getId())}">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6 col-md-offset-3">
+                                <img class="ratio img-responsive img-circle img-circular"  style="background-image: url('${arg?.getFooterData(arg?.getId())?.getPathToPhoto()}');"/>
+                            </div>
+                            <div class="col-lg-12">
+                                    <p class="prof_name">
+                                            ${arg?.getTitle()}
+                                            ${arg?.getFirstname()}
+                                            ${arg?.getLastname()}  
+                                    </p>
+                                    <p class="prof_department">Wydział Elektroniki i Telekomunnikacji</p>
+                                </div>
+                            </div>
+                    </div>
+                   </a>
+                </div>
+                #{/list}
+            </div>
+            
+        </div>
+    </div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="text-center">
+        <div class="footer-above">
+          <div class="container">
+            <div class="row">
+              <div class="footer-col col-md-4">
+                <img class="img-responsive center" src="https://www4.put.poznan.pl/icon.png" alt="poa-logo"/>
+                <p class="name-of-cathedra">
+                  Wydział Elektroniki i Telekomunikacji
+                  Katedra Sieci Telekomunikacyjnych i Komputerowych
+                </p>
+              </div>
+              <div class="footer-col col-md-4">
+                <div class="text-justify margin-bottom-50">
+                    <p> <i class="fa fa-2x fa-envelope-o footer-icon" aria-hidden="true"></i> jan.kowalski@et.put.poznan.pl </p>
+                    <p><i class="fa fa-2x fa-phone footer-icon" aria-hidden="true"></i> 600444333</p>
+                    <p><i class="fa fa-2x fa-sitemap footer-icon" aria-hidden="true"></i> www.jankowalski.pl</p>
+                    
+                </div>
+                <p><i class="fa fa-2x fa-map-marker footer-icon" aria-hidden="true"></i>
+                </p>
+                  <p>ul. Polanka 3
+                      60-965 Poznań
+                      POLSKA
+                  </p>
+              </div>
+              <div class="footer-col col-md-4">
+                <h3>konsultacje</h3>
+                <p>środa: 18:00- 19:00</p>
+                <p>ul. Polanka 3, pokój 202</p>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  Copyright &copy; eProf 2017
+                </div>
+              </div>
+            </div>
+        </div>
+  
+          
+      </footer>
+
+
+<script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, ul, li, a, i;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myUL");
+            div2 = div.getElementsByClassName("box");
+        
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < div2.length; i++) {
+                a = div2[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    div2[i].style.display = "";
+                } else {
+                    div2[i].style.display = "none";
+                }
+            }
+        }
+        </script>
+<a href=@{Application.login}>KLIIIIKNIJ!</a>

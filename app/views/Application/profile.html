@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>eProf</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="@{'public/vendor/bootstrap/css/bootstrap.min.css'}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="@{'public/vendor/font-awesome/css/font-awesome.min.css'}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!--table-->
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="@{'public/stylesheets/freelancer.css'}" rel="stylesheet">
+    
+
+  </head>
+
+  <body id="page-top">
+    
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4 offset-lg-4 col-md-4 offset-md-4 col-sm-4 offset-sm-4 col-xs-8 offset-xs-1">
+                  <img class="ratio img-responsive img-circle img-circular" style="background-image: url('${profile?.getFooterData()?.getPathToPhoto()}');"/>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-3"></div>
+
+          </div>
+        <div class="intro-text">
+          <span class="name">
+              ${profile?.getTitle()}
+              ${profile?.getFirstname()}
+              ${profile?.getLastname()}  
+          </span>
+          <hr class="star-light">
+          <span class="skills">${profile?.getFooterData().getPosition()}  </span>
+        </div>
+      </div>
+    </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><span class="logo-font">e Prof</span> <i class="fa fa-briefcase white-color"></i> </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">Biografia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#cv">CV</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#publication">Publikacje</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Skontaktuj się</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#information">Informacje</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    #{if (profile.getBiography() != null)}
+    <section class="success" id="about">
+      <div class="container">
+        <h2 class="text-center dark-blue">Biografia</h2>
+        <hr class="star-primary about-icon">
+        <div class="row">
+
+          <div class="col-lg-12" style="column-count:2;">
+              ${profile?.getBiography()?.getContent().raw()}  
+          </div>
+        </div>
+      </div>
+    </section>
+    #{/if}
+    #{if !(profile?.getCvsMap().isEmpty())}
+    <section id="cv">
+        
+              <div class="container">
+                  <h2 class="text-center title-blue">Curriculum Vitae</h2>
+                <div class="ul">
+                    #{list items:profile?.getCvsMap(), as:'task'}
+                    <div class="li">
+                      <div class="row cv-item">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                          <p>
+                            od: ${task?.getValue()[0]} do: ${task.getValue()[1]}
+                          </p>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                          <i class="fa-2x fa fa-circle-o-notch point-circle"></i>
+                          <div class="timeline">
+          
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <p> ${task?.getValue()[2]}</p>
+                        </div>
+                      </div>
+          
+                    </div>
+                    #{/list}#{else} Uzupełnij swoje CV #{/else}
+                  
+              </div>
+              </div>
+          </section>
+          #{/if}
+          #{if !profile.getPublicationsList().isEmpty()}
+          <section id="publication">
+              <div class="container">
+                  <h2 class="text-center dark-blue">Publikacje</h2>
+                  <hr class="star-primary publication-icon">
+                  <div class="row">
+                      <div class="col-lg-12">
+                  
+                          <table id="publicationsTable" class="display table-striped myTable">
+                              <thead>
+                                <tr>
+                                  <th>Lp.</th>
+                                  <th>Data</th>
+                                  <th>Temat</th>
+                                  <th>Pobierz</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                #{list items:profile?.getPublicationsList(), as:'arg'}
+                                <tr>
+                                  <td></td>
+                                  <td>${arg?.getDate()}</td>
+                                  <td>${arg?.getDescription()}</td>
+                                  <td>
+                                    <a href="@{AdminPanel.download(arg?.getId())}" download>
+                                      <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    </a>
+                                  </td>
+                                </tr>
+                                #{/list}
+                  
+                              </tbody>
+                            </table>
+                </div>
+                </div>
+              </div>
+          </section>
+          #{/if}
+          
+
+    
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="text-center title-white">Skontaktuj się</h2>
+        <hr class="star-light contact-icon">
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        
+        <div class="col-lg-12">
+          #{form @AdminPanel.sendEmail(profile?.getId()), id:'contact-form'}
+            
+                <p>Szanowny Panie Profesorze,</p>
+                <p>
+                    <textarea name="mail.message" value="${params['mail.message']}" id="your-message" placeholder="(Twoja wiadomość)" class="expanding" required></textarea>
+                </p>
+                <p>Z Wyrazami Szacunku,</p>
+                <p><input type="text" name="mail.name" value="${params['mail.name']}" id="your-name" minlength="3" placeholder="(Imię i nazwisko)" required></p>
+                <p><input type="text" name="mail.index" value="${params['mail.index']}" id="your-name" minlength="3" placeholder="(Indeks)" required></p>
+                <p><input type="email" name="mail.email" value="${params['mail.email']}" id="email" placeholder="(adres email)" required></p>
+                <div class="text-center">
+                    <button type="submit" id="contact-form" >
+                        <svg version="1.1" class="send-icn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="36px" viewBox="0 0 100 36" enable-background="new 0 0 100 36" xml:space="preserve">
+                          <path d="M100,0L100,0 M23.8,7.1L100,0L40.9,36l-4.7-7.5L22,34.8l-4-11L0,30.5L16.4,8.7l5.4,15L23,7L23.8,7.1z M16.8,20.4l-1.5-4.3
+                    l-5.1,6.7L16.8,20.4z M34.4,25.4l-8.1-13.1L25,29.6L34.4,25.4z M35.2,13.2l8.1,13.1L70,9.9L35.2,13.2z" />
+                        </svg>
+                        <small>send</small>
+                      </button>
+                </div>
+                  
+                </p>
+              #{/form}
+        </div>
+      </div>
+    </section>
+    <!-- Portfolio Grid Section -->
+    <section id="information">
+      <div class="container">
+        <h2 class="text-center dark-blue">Informacje</h2>
+        <hr class="star-primary info-icon">
+        <div class="row">
+            %{
+              i = 0;
+           }%
+            #{list items:profile?.getInformationsList(), as:'arg'}
+            
+              <div class="col-sm-3 portfolio-item">
+                <a href="#deleteModal${i}" data-toggle="modal">
+                </a>
+                  <h3 class="header-text">
+                    ${arg?.getSubject()}  
+                  </h3>
+                  <p class="date">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
+                      ${arg?.getDate()}
+                  </p>
+                  <div class="information-text">
+                      ${arg.getContent().raw()}  
+                  </div>
+                  <a href="#portfolioModal${i}" data-toggle="modal">
+                    <button type="button" class="btn btn-info pull-right">Zobacz więcej</button>
+                  </a>
+              </div>
+              <div class="portfolio-modal modal fade" id="portfolioModal${i}" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="close-modal" data-dismiss="modal">
+                        <div class="lr">
+                          <div class="rl"></div>
+                        </div>
+                      </div>
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                              <h2>${arg.getSubject()}</h2>
+                              <hr class="star-primary">
+                              <img class="img-fluid img-centered" src="img/portfolio/circus.png" alt="">
+                              <div class="information-text">
+                              ${arg.getContent().raw()}
+                            </div>
+                              <ul class="list-inline item-details">
+                                <li>Autor:
+                                  <strong>
+                                    <p>${arg.getProfileById(arg.getUserId()).getFirstname()} ${arg.getProfileById(arg.getUserId()).getLastname()}</p>
+                                  </strong>
+                                </li>
+                                <li>Data:
+                                  <strong>
+                                      ${arg.getDate().raw()}
+                                  </strong>
+                                </li>
+                              </ul>
+                              <button class="btn btn-success" type="button" data-dismiss="modal">
+                                <i class="fa fa-times"></i>
+                                Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              %{
+                i++;
+             }%
+            #{/list}
+          
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="footer-above">
+        <div class="container">
+          <div class="row">
+            <div class="footer-col col-md-4">
+              <img class="img-responsive center" src="https://www4.put.poznan.pl/icon.png" alt="poa-logo"/>
+              <p class="name-of-cathedra">
+                Wydział Elektroniki i Telekomunikacji
+                Katedra Sieci Telekomunikacyjnych i Komputerowych
+              </p>
+            </div>
+            <div class="footer-col col-md-4">
+              <div class="text-justify margin-bottom-50">
+                  <p> <i class="fa fa-2x fa-envelope-o footer-icon" aria-hidden="true"></i> ${profile?.getEmail()} </p>
+                  <p><i class="fa fa-2x fa-phone footer-icon" aria-hidden="true"></i>  ${profile?.getFooterData().getPhoneNumber()}</p>
+                  <p><i class="fa fa-2x fa-sitemap footer-icon" aria-hidden="true"></i> ${profile?.getFooterData().getWebPage()}</p>
+                  
+              </div>
+              <p><i class="fa fa-2x fa-map-marker footer-icon" aria-hidden="true"></i>
+              </p>
+                <p>
+                    ${profile?.getFooterData()?.getLocation()}
+                </p>
+            </div>
+            <div class="footer-col col-md-4">
+              <h3>konsultacje</h3>
+              <p>${profile?.getFooterData().getConsultationHours()}</p>
+              <p>${profile?.getFooterData().getLocation()}, pokój ${profile?.getFooterData().getRoomNumber()}</p>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                Copyright &copy; eProf 2017
+              </div>
+            </div>
+          </div>
+      </div>
+
+        
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top d-lg-none">
+      <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
+
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="@{'public/vendor/jquery/jquery.min.js'}"></script>
+    <script src="@{'public/vendor/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="@{'public/vendor/jquery-easing/jquery.easing.min.js'}"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="@{'public/javascripts/profile/jqBootstrapValidation.js'}"></script>
+    <script src="@{'public/javascripts/profile/contact_me.js'}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="@{'public/javascripts/profile/freelancer.min.js'}"></script>
+    <script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $('.myTable').DataTable();
+});
+</script>
+<script>
+  // Auto resize input
+function resizeInput() {
+    $(this).attr('size', $(this).val().length);
+}
+
+$('input[type="text"], input[type="email"]')
+    // event handler
+    .keyup(resizeInput)
+    // resize on page load
+    .each(resizeInput);
+
+
+console.clear();
+(function(){
+  
+  var textareas = document.querySelectorAll('.expanding'),
+      
+      resize = function(t) {
+        t.style.height = 'auto';
+        t.style.overflow = 'hidden'; // Ensure scrollbar doesn't interfere with the true height of the text.
+        t.style.height = (t.scrollHeight + t.offset ) + 'px';
+        t.style.overflow = '';
+      },
+      
+      attachResize = function(t) {
+        if ( t ) {
+          console.log('t.className',t.className);
+          t.offset = !window.opera ? (t.offsetHeight - t.clientHeight) : (t.offsetHeight + parseInt(window.getComputedStyle(t, null).getPropertyValue('border-top-width')));
+
+          resize(t);
+
+          if ( t.addEventListener ) {
+            t.addEventListener('input', function() { resize(t); });
+            t.addEventListener('mouseup', function() { resize(t); }); // set height after user resize
+          }
+
+          t['attachEvent'] && t.attachEvent('onkeyup', function() { resize(t); });
+        }
+      };
+  
+  // IE7 support
+  if ( !document.querySelectorAll ) {
+  
+    function getElementsByClass(searchClass,node,tag) {
+      var classElements = new Array();
+      node = node || document;
+      tag = tag || '*';
+      var els = node.getElementsByTagName(tag);
+      var elsLen = els.length;
+      var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
+      for (i = 0, j = 0; i < elsLen; i++) {
+        if ( pattern.test(els[i].className) ) {
+          classElements[j] = els[i];
+          j++;
+        }
+      }
+      return classElements;
+    }
+    
+    textareas = getElementsByClass('expanding');
+  }
+  
+  for (var i = 0; i < textareas.length; i++ ) {
+    attachResize(textareas[i]);
+  }
+  
+})();
+
+</script>
+ <script>
+    $(document).ready(function () {
+
+      if ($.fn.dataTable.isDataTable('#publicationsTable')) {
+        t = $('#publicationsTable').DataTable();
+      }
+      else {
+        var t = $('#publicationsTable').DataTable({
+          "columnDefs": [{
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+          }],
+          "order": [[1, 'asc']]
+        });
+      }
+
+
+      t.on('order.dt search.dt', function () {
+        t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+          cell.innerHTML = i + 1;
+        });
+      }).draw();
+    });
+  </script>
+  </body>
+
+</html>

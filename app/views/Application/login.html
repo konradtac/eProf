@@ -1,0 +1,108 @@
+#{extends 'main.html' /}
+#{set title:'Login' /}
+#{set 'moreStyles'}
+    #{stylesheet 'login.css' /}
+#{/set}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Zaloguj się</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Zarejestruj się</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                         
+                            #{form @Application.loginUser(), id:'login-form'}
+                                <fieldset>              
+                                    #{ifErrors}
+                                        <p class="errorLabel">Błedny email lub hasło</p>
+                                    #{/ifErrors}
+                                    
+                                    <div class="field form-group">         
+                                        <input id="username" type="text" name="user.email" value="${params['user.email']}" class="#{errorClass 'user.email' /} form-control" placeholder = "e-mail"/>
+                                        <span class="error">#{error 'user.email' /}</span>
+                                    </div>
+                                </fieldset> 
+                                <fieldset> 
+                                    <div class="field form-group">                    
+                                            <input id="password" type="password" name="user.password" value="${params['user.password']}" class="#{errorClass 'user.password' /} form-control" placeholder = "hasło" /> 
+                                            <span class="error">#{error 'user.password' /}</span>
+                                    </div>   
+                                </fieldset> 
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Zaloguj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="text-center">
+                                                <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Zapomniałem hasła</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            #{/form}
+                            #{form @Application.registerUser(), id:'register-form', style:'display:none'}
+                                <div class="form-group">
+                                    <input id="firstname" type="text" name="user.firstname" value="${params['user.firstname']}" class="#{errorClass 'user.firstname' /} form-control" placeholder = "Imie"/>
+                                    <span class="error">#{error 'user.firstname' /}</span>
+                                </div>
+                                <div class="form-group">
+                                        <input id="lastname" type="text" name="user.lastname" value="${params['user.lastname']}" class="#{errorClass 'user.lastname' /} form-control" placeholder = "Nazwisko"/>
+                                        <span class="error">#{error 'user.lastname' /}</span>
+                                    </div>
+                                <div class="form-group">
+                                        <input id="email" type="text" name="user.email" value="${params['user.email']}" class="#{errorClass 'user.email' /} form-control" placeholder = "email(uczelniany)"/>
+                                        <span class="error">#{error 'user.email' /}</span>
+                                    </div>
+                                <div class="form-group">
+                                        <input id="password" type="password" name="user.password" value="${params['user.password']}" class="#{errorClass 'user.password' /} form-control" placeholder = "hasło"/>
+                                        <span class="error">#{error 'user.password' /}</span>
+                                </div>
+                                <div class="form-group">
+                                        <input id="passwordConfirm" type="password" name="user.passwordConfirm" value="${params['user.passwordConfirm']}" class="#{errorClass 'user.passwordConfirm' /} form-control" placeholder = "powtórz hasło"/>
+                                        <span class="error">#{error 'user.passwordConfirm' /}</span>
+                                </div>
+                                <div class="form-group">
+                                    <select class="#{errorClass 'user.title' /} form-control" id="title" name="user.title" value="${params['user.title']}" >
+                                      <option>mgr inż.</option>
+                                      <option>dr inż.</option>
+                                      <option>dr hab. inż. </option>
+                                      <option>prof. dr hab. inż.</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="register-form" id="register-form" tabindex="4" class="form-control btn btn-register" value="Zarejestruj">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            #{/form}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+#{set 'moreScripts'}
+#{script 'login.js' /}
+#{/set}

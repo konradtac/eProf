@@ -1,0 +1,96 @@
+#{extends 'admin.html' /} #{set title:'Panel administratora' /}
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="@{AdminPanel.dashboard()}">Panel główny</a>
+      </li>
+      <li class="breadcrumb-item active">Curriculum Vitae</li>
+    </ol>
+    <div class="row">
+      <div class="col-12">
+        <h1>Curriculum Vitae</h1>
+        <div class="ul">
+          #{list items:mapToSend, as:'task'}
+          <div class="li">
+            <div class="row cv-item">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <p>
+                  od: ${task.getValue()[0]} do: ${task.getValue()[1]}
+                </p>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <i class="fa-2x fa fa-circle-o-notch point-circle"></i>
+                <div class="timeline">
+
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <p> ${task.getValue()[2]}</p>
+              </div>
+            </div>
+
+          </div>
+          #{/list} #{else} Uzupełnij swoje CV #{/else}
+        </div>
+        #{ifErrors}
+        <span class="error">Wypełnij poprawnie formularz</span>
+        #{/ifErrors}
+        <div class="col-lg-12">
+          #{form @AdminPanel.saveCv(), id:'cv-form' }
+          <div class="input_fields_wrap">
+
+            <div class="form-inline ">
+              <div class="form-group ">
+                <label for="forField1">Od: </label>
+                <input required id="forField1" type="date" name="data.dateFor" value="${params['data.dateFor']}" class="#{errorClass 'data' /} form-control"
+                  placeholder="Od" />
+              </div>
+
+              <div class="form-group">
+                <label for="toField1">Do: </label>
+                <input required id="toField1" type="date" name="data.dateTo" value="${params['data.dateTo']}" class="#{errorClass 'data' /} form-control"
+                  placeholder="Do" />
+              </div>
+              <div class="form-group">
+                <label for="description1">Opis: </label>
+                <input required id="description1" type="text" name="data.description" value="${params['data.description']}" class="#{errorClass 'data' /} form-control"
+                  placeholder="Opis" />
+              </div>
+              <button type="submit" class="btn btn_plus add_field_button">+</button>
+            </div>
+        
+          </div>
+          <input type="submit" name="cv-form" id="cv-form" tabindex="4" class="form-control btn btn-login" value="Zapisz"> #{/form}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  #{include 'admin-footer.html' /} #{get 'admin-footer' /} #{set 'customScripts'}
+  <script>
+    $(document).ready(function () {
+      var max_fields = 10; //maximum input boxes allowed
+      var wrapper = $(".input_fields_wrap"); //Fields wrapper
+      var add_button = $(".add_field_button"); //Add button ID
+      var id_counter = 0;
+
+      var x = 1; //initlal text box count
+      $(add_button).click(function (e) { //on add input button click
+        e.preventDefault();
+        if (x < max_fields) { //max input box allowed
+          x++; //text box increment
+          $(wrapper).append('<div class="form-inline"><div class="form-group "><label for="forField' + id_counter + '">Od: </label><input required id="forField' + id_counter + '" type="date" name="data.dateFor" value="${params[' + data.dateFor + ']}" class="#{errorClass ' + data + ' /} form-control" placeholder="Od" /></div><div class="form-group"><label for="toField' + id_counter + '">Do: </label><input required id="toField' + id_counter + '" type="date" name="data.dateTo" value="${params[' + data.dateTo + ']}" class="#{errorClass ' + data + ' /} form-control" placeholder="Do" /></div><div class="form-group"><label for="description' + id_counter + '">Opis: </label><input required id="description' + id_counter + '" type="text" name="data.description" value="${params[' + data.description + ']}" class="#{errorClass ' + data + ' /} form-control" placeholder="Opis" /></div> <button type="submit" class="btn btn_minus remove_field">-</button></div>');
+          id_counter++;
+        }
+      });
+
+      $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+      })
+    });
+  </script> #{/set}
+
+</div>

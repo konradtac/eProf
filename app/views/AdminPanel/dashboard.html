@@ -1,0 +1,162 @@
+#{extends 'admin.html' /} #{set title:'Panel administratora' /}
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="@{AdminPanel.dashboard()}">Panel Główny</a>
+      </li>
+    </ol>
+    <div class="col-lg-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+          <h1>Panel Główny</h1>
+        </div>
+        <div class="container margin-top-50px">
+        <div class="row">
+          <div class="col-lg-7">
+
+                <div class="col-lg-4 offset-lg-4 col-md-4 offset-md-4 col-sm-4 offset-sm-4 col-xs-8 offset-xs-1">
+                  <a href="#imgModal" data-toggle="modal">
+                    <img class="ratio img-responsive img-circle img-circular"  style="background-image: url('${createFooterData.getPathToPhoto()}');"/>
+                  </a>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-3"></div>
+                <div class="intro-text">
+                  <h2 class="name">
+                    ${createFooterData?.getProfileById(createFooterData.getUserId()).getTitle()}
+                    ${createFooterData?.getProfileById(createFooterData.getUserId()).getFirstname()}
+                    ${createFooterData?.getProfileById(createFooterData.getUserId()).getLastname()}  
+                  </h2>
+                </div>
+              </div>
+             
+          <div class="col-lg-5">
+            <ul class="unstyled">
+              <li> 
+                    <i class="fa fa-2x fa-briefcase margin-right-10px" aria-hidden="true"></i>
+                    <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                    <form action='/adminpanel/saveFooterDatas?type=position' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                      <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                    <input class='form-control' type='text' name='data' placeholder='np. adiunkt'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                        <i class='fa fa-check' aria-hidden='true'></i>
+                    </button>
+                      ">
+                          #{if (createFooterData?.getPosition() == null) || (createFooterData?.getPosition().isEmpty())} Wprowadź stanowisko #{/if} ${createFooterData?.getPosition()}
+                        </a>
+                  </li>
+              <li>
+                <i class="fa fa-2x fa-phone-square margin-right-10px" aria-hidden="true"></i>
+                <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                <form action='/adminpanel/saveFooterDatas?type=phone' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                  <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                <input class='form-control' type='text' name='data' placeholder='np. 666-666-666'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                    <i class='fa fa-check' aria-hidden='true'></i>
+                </button>
+                  ">
+                  #{if (createFooterData?.getPhoneNumber() == null) || (createFooterData?.getPhoneNumber().isEmpty())} Wproawdź numer telefonu #{/if} ${createFooterData?.getPhoneNumber()}
+                </a>
+              </li>
+              <li>
+                <i class="fa fa-2x fa-building-o margin-right-10px" aria-hidden="true"></i>
+                <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                <form action='/adminpanel/saveFooterDatas?type=roomNumber' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                  <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                <input class='form-control' type='text' name='data' placeholder='np. 321'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                    <i class='fa fa-check' aria-hidden='true'></i>
+                </button>
+                  ">
+                    #{if (createFooterData?.getRoomNumber() == null) || (createFooterData?.getRoomNumber().isEmpty())} Wproawdź numer pokoju #{/if} ${createFooterData?.getRoomNumber()}
+                  </a>
+                </li>
+              <li> 
+                <i class="fa fa-2x fa-map-marker margin-right-10px" aria-hidden="true"></i>
+                <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                <form action='/adminpanel/saveFooterDatas?type=location' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                  <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                <input class='form-control' type='text' name='data' placeholder='np. ul. Polanka 3, Poznań'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                    <i class='fa fa-check' aria-hidden='true'></i>
+                </button>
+                  ">
+                      #{if (createFooterData?.getLocation() == null) || (createFooterData?.getLocation().isEmpty())} Wproawdź lokalizacje #{/if} ${createFooterData?.getLocation()}
+                    </a>
+              </li>
+              <li> 
+                  <i class="fa fa-2x fa-clock-o margin-right-10px" aria-hidden="true"></i>
+                  <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                  <form action='/adminpanel/saveFooterDatas?type=consultationHours' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                    <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                  <input class='form-control' type='text' name='data' placeholder='np. środa: 18:00 do 19:00'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                      <i class='fa fa-check' aria-hidden='true'></i>
+                  </button>
+                    ">
+                        #{if (createFooterData?.getConsultationHours() == null) || (createFooterData?.getConsultationHours().isEmpty())} Dzień tygodnia i godzina konsultacji #{/if} ${createFooterData?.getConsultationHours()}
+                      </a>
+                </li>
+                <li> 
+                    <i class="fa fa-2x fa-sitemap margin-right-10px" aria-hidden="true"></i>
+                    <a href="#" data-toggle="popover" title="Edytuj" data-content="
+                    <form action='/adminpanel/saveFooterDatas?type=webPage' method='post' accept-charset='utf-8' enctype='application/x-www-form-urlencoded' id='phone-form' class='form-inline' >
+                      <input type='hidden' name='authenticityToken' value='04fdac1181ff47335242e267f83b7761d775b79d'/>
+                    <input class='form-control' type='text' name='data' placeholder='www.mojastrona.pl'><button type='submit' name='phone-form' id='phone-form' tabindex='4' class='form-control btn btn-confirme' value='Zapisz'>
+                        <i class='fa fa-check' aria-hidden='true'></i>
+                    </button>
+                      ">
+                          #{if (createFooterData?.getWebPage() == null) || (createFooterData?.getWebPage().isEmpty())} Wprowadaź adres swojej strony #{/if} ${createFooterData?.getWebPage()}
+                        </a>
+                  </li>
+            </ul>
+            <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Zmiana zdjęcia profilowego</h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    #{form @Adminpanel.savePhoto(), id:'photo-form', enctype:'multipart/form-data'}
+                    <div class="modal-body">
+                        
+                        <div class="form-inline ">
+                          <div class="form-group">
+                            <input name="photo" class="form-control" type="file" id="photo" name="file" />
+                          </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" name="photo" class = "btn btn-primary">
+                          Zapisz
+                      </button>
+           
+                    </div>
+                    #{/form}
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="@{'/public/javascripts/admin/bootstrap-editable.js'}"></script>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="popover"]').popover({
+        html: true,
+        content: function () {
+          return $("#example-popover-content").html();
+        },
+        title: function () {
+          return $("#example-popover-title").html();
+        }
+      });
+    });
+  </script> #{include 'admin-footer.html' /} #{get 'admin-footer' /}
+
+</div>

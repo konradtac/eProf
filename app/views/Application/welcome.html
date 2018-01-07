@@ -1,0 +1,37 @@
+#{extends 'main.html' /} #{set title:'Login' /} #{set 'moreStyles'}
+#{stylesheet 'login.css' /} #{/set}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-login">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							#{form @Application.authorization(), id:'login-form'}
+							<div class="panel-heading">
+								<h2 class="header-step">Krok Drugi- weryfikacja danych</h2>
+								<p class="welcome-text">Drogi użytkowniku, na Twoją skrzynkę pocztową został wysłany klucz, aktywujący konto. Wpisz klucz w celu werfykiacji</p>
+								<hr>
+							</div>
+							<fieldset>
+								<div class="field form-group">
+									<input id="authorization" type="text" name="key" class="#{errorClass 'user.generateKey' /} form-control" placeholder="Wprowadź klucz" /> <span class="error">#{error 'user.generateKey' /}</span>
+								</div>
+                            </fieldset>
+                            <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Przejdź dalej">
+                                        </div>
+                                    </div>
+                                </div>
+							#{/form}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+#{set 'moreScripts'} #{script 'login.js' /} #{/set}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>eProf- panel administratora</title>
+  <!-- Bootstrap core CSS-->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link href="@{'/public/stylesheets/admin/bootstrap.min.css'}" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="@{'/public/stylesheets/admin/font-awesome.min.css'}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="@{'/public/stylesheets/admin/admin-panel.css'}" rel="stylesheet">
+  <script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+  <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+  
+ 
+
+  #{get 'customStyles' /}
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  #{include 'admin-nav.html' /}
+  #{get 'admin-nav' /}
+  #{doLayout /}
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="@{'/public/javascripts/admin/jquery.min.js'}"></script>
+  <script src="@{'/public/javascripts/admin/bootstrap.bundle.min.js'}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="@{'/public/javascripts/admin/jquery.easing.min.js'}"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="@{'/public/javascripts/admin/sb-admin.min.js'}"></script>
+  <script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script>
+  $(document).ready(function(){
+  $('.myTable').DataTable();
+});
+</script>
+  
+  #{get 'moreScripts' /}
+  #{get 'customScripts' /}
+  
+</body>
+
+</html>

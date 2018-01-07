@@ -1,0 +1,11 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+Profile.firstname = Imie 
+Profile.lastname = Nazwisko
+Profile.password = hasło
+Profile.passwordConfirm = powtórz hasło
+Profile.email = email
+Profile.title = tytuł naukowy
+
+ 

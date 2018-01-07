@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Login' /}
+#{set 'moreStyles'}
+    #{stylesheet 'login.css' /}
+#{/set}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+           		${user.getFirstname()} ! <br/>
+           		Witamy w systemie eProf. W celu dokończenia procesu rejestracji, prosimy wpisać poniższy klucz dostępu:<br/>
+           		<h2 style="color:#0f6ead; font-weight:bold;">${user.getGenerateKey()}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+#{set 'moreScripts'}
+#{script 'login.js' /}
+#{/set}

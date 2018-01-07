@@ -1,0 +1,40 @@
+#{extends 'admin.html' /}
+#{set title:'Panel administratora' /}
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@{AdminPanel.dashboard()}">Panel główny</a>
+        </li>
+        <li class="breadcrumb-item active">Biografia</li>
+      </ol>
+      <div class="row">
+        <div class="col-12">
+          <h1>Biografia</h1>
+          ${arg?.getContent().raw()}
+          #{form @AdminPanel.saveBiography(), id:'save-biography'}
+            <textarea name="data" value="${arg?.getContent().raw()}"></textarea>
+            <div class="form-group btn-margin-top">
+                <div class="row">
+                  <div class="col-sm-8"></div>
+                    <div class="col-sm-4">
+                        <input type="submit" name="save-biography" id="save-biography" tabindex="4" class="form-control btn btn-save" value="Zapisz">
+                    </div>
+                </div>
+            </div>
+          #{/form}
+          
+          <script>
+            CKEDITOR.replace( 'data' );
+            
+            
+          </script>
+        </div>
+      </div>
+    </div>
+    #{include 'admin-footer.html' /}
+    #{get 'admin-footer' /}
+    
+  </div>
